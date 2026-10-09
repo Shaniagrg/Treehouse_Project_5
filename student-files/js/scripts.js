@@ -6,6 +6,7 @@ let usersList = [];
 
 async function fetchData(){
     try{
+        //paste the URL and add =12 to fecth 12 random users
         const response = await fetch ("https://randomuser.me/api/?results=12");
         if (!response.ok){
             throw new Error (`Error fetching data - Status: ${response.status}`);
