@@ -140,6 +140,7 @@ function displayEmployeeModal(index){
     //when previous button is clicked go back
     previousBtn.addEventListener('click', () => {
         if (currentModalIndex > 0){
+            //subtract 1 form the index to move to the previous employee
             currentModalIndex--;
             //ropen the modal with previous index
             displayEmployeeModal(currentModalIndex);
@@ -148,6 +149,7 @@ function displayEmployeeModal(index){
     //when Next button is clicked go to next employee
     nextBtn.addEventListener('click', () => {
         if (currentModalIndex < usersList.length - 1){
+            //add 1 to the index to move to the next employee
             currentModalIndex++;
             //ropen the modal with next index
             displayEmployeeModal(currentModalIndex);
