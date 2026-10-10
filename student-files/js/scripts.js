@@ -128,3 +128,36 @@ function displayEmployeeModal(index){
 
 }
 
+//Add Search Functionality
+
+function searchFunctionality(){
+    const searchBar = document.querySelector('.search-container');
+
+    //create HTML string for search imput and submit
+    let searchHTML = `
+        <form action="#" method="get">
+            <input type="search" id="search-input" class="search-input" placeholder="Search...">
+            <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+        </form>
+    `
+    searchBar.insertAdjacentHTML('beforeend', searchHTML);
+
+    const searchInput = document.getElementById("search-input");
+
+    //listen when typing
+    //use input instead of keyup so that when you exit from search bar it loads the browser with 12 random user
+    searchInput.addEventListener('input', () => {
+        let searchTyping = searchInput.value.toLowerCase();
+
+        //filter results
+        let userFilter = usersList.filter(user => {
+            let userName = `${user.name.first} ${user.name.last}`.toLowerCase();
+            return userName.includes(searchTyping)
+        })
+
+        //gallery will only show filteres results
+        userGalleryGenerator(userFilter);
+    })
+}
+
+searchFunctionality()
