@@ -4,6 +4,8 @@ const body = document.querySelector('body');
 
 //Get and Display 12 Random Users
 let usersList = [];
+//store the displayed user only
+let displayedUser = [];
 
 async function fetchData(){
     try{
@@ -17,9 +19,10 @@ async function fetchData(){
 
         //Store the user inside an array
         usersList = data.results;
+        displayedUser = usersList;
 
         //fucntion call to build the page
-        userGalleryGenerator(usersList);
+        userGalleryGenerator(displayedUser);
 
     }catch(error){
         console.error(error);
@@ -87,7 +90,7 @@ function displayEmployeeModal(index){
     }
 
     //get the specific employee data using the index 
-    let user = usersList[index]
+    let user = displayedUser[index]
 
     //formatting birthday to mm/dd/yyyy
     let birthday = new Date(user.dob.date);
@@ -103,7 +106,7 @@ function displayEmployeeModal(index){
                         <p class="modal-text">${user.email}</p>
                         <p class="modal-text cap">${user.location.city}</p>
                         <hr>
-                        <p class="modal-text">${user.phone}</p>
+                        <p class="modal-text">${user.cell}</p>
                         <p class="modal-text">${user.location.street.number} ${user.location.street.name}, ${user.location.city}, ${user.location.state} ${user.location.postcode}</p>
                         <p class="modal-text">Birthday: ${formattedBirthday}</p>
                     </div>
@@ -148,7 +151,7 @@ function displayEmployeeModal(index){
     })
     //when Next button is clicked go to next employee
     nextBtn.addEventListener('click', () => {
-        if (currentModalIndex < usersList.length - 1){
+        if (currentModalIndex < displayedUser.length - 1){
             //add 1 to the index to move to the next employee
             currentModalIndex++;
             //ropen the modal with next index
@@ -184,7 +187,8 @@ function searchFunctionality(){
             let userName = `${user.name.first} ${user.name.last}`.toLowerCase();
             return userName.includes(searchTyping)
         })
-
+        //update displayedUser so that the modal knows to look at the filtered list
+        displayedUser = userFilter;
         //gallery will only show filteres results
         userGalleryGenerator(userFilter);
     })
