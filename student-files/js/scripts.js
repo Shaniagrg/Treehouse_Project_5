@@ -51,7 +51,8 @@ function userGalleryGenerator(users){
                         <p class="card-text">${user.email}</p>
                         <p class="card-text cap">${user.location.city}, ${user.location.state}</p>
                     </div>
-                </div>
+
+            </div>
         `;
         //allow you to add strings of HTML to the DOM without disrupting what already exists in the DOM
         gallery.insertAdjacentHTML('beforeend', eachCard);
@@ -69,10 +70,11 @@ gallery.addEventListener('click', (e) => {
     if(!clcikedCard){
         return
     }
-
+    
     let employeeIndex = clcikedCard.getAttribute('data-index');
     //open the modal of the employee
-    displayEmployeeModal(parseInt(employeeIndex));
+    currentModalIndex = parseInt(employeeIndex);
+    displayEmployeeModal(currentModalIndex);
 
 })
 
@@ -106,6 +108,10 @@ function displayEmployeeModal(index){
                         <p class="modal-text">Birthday: ${formattedBirthday}</p>
                     </div>
                 </div>
+                <div class="modal-btn-container">
+                        <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+                        <button type="button" id="modal-next" class="modal-next btn">Next</button>
+                </div>
         </div>
     `
     //append modal to body
@@ -123,6 +129,28 @@ function displayEmployeeModal(index){
     modalContainer.addEventListener('click', (e) => {
         if (e.target.className === "modal-container"){
             modalContainer.remove()
+        }
+    });
+
+    //Add Modal Toggle Functionality
+
+    const previousBtn = document.getElementById('modal-prev');
+    const nextBtn = document.getElementById('modal-next');
+
+    //when previous button is clicked go back
+    previousBtn.addEventListener('click', () => {
+        if (currentModalIndex > 0){
+            currentModalIndex--;
+            //ropen the modal with previous index
+            displayEmployeeModal(currentModalIndex);
+        }
+    })
+    //when Next button is clicked go to next employee
+    nextBtn.addEventListener('click', () => {
+        if (currentModalIndex < usersList.length - 1){
+            currentModalIndex++;
+            //ropen the modal with next index
+            displayEmployeeModal(currentModalIndex);
         }
     })
 
@@ -161,3 +189,4 @@ function searchFunctionality(){
 }
 
 searchFunctionality()
+
